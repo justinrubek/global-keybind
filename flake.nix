@@ -27,11 +27,12 @@
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux" "aarch64-linux"];
       imports = [
-        inputs.pre-commit-hooks.flakeModule
+        ./flake-parts/home_modules.nix
 
         ./flake-parts/cargo.nix
         ./flake-parts/rust-toolchain.nix
 
+        inputs.pre-commit-hooks.flakeModule
         ./flake-parts/pre-commit.nix
         ./flake-parts/formatting.nix
 

@@ -10,6 +10,7 @@
     # packages required for building the rust packages
     extraPackages = [
       pkgs.pkg-config
+      pkgs.xdotool
     ];
     withExtraPackages = base: base ++ extraPackages;
 

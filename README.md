@@ -11,3 +11,6 @@ Alternatively, you can use `cat /proc/bus/input/devices` and look for the device
 
 You will also need to determine the event code for the key you want to use.
 This can be done by running `evtest`, selecting the device, then pressing the key you want to use.
+The resulting code's value can be found from [the linux input-event-codes.h](https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h).
+
+Here is an example invocation of the program that will press F12 when the mouse side button is pressed: `global-keybind-cli --device /dev/input/event0 --key-to-press 275 --key-to-send F12`

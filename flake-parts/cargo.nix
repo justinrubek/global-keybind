@@ -35,12 +35,12 @@
     deps-only = craneLib.buildDepsOnly ({} // common-build-args);
 
     packages = {
-      default = packages.cli;
-      cli = craneLib.buildPackage ({
-          pname = "cli";
+      default = packages.global-keybind-cli;
+      global-keybind-cli = craneLib.buildPackage ({
+          pname = "global-keybind-cli";
           cargoArtifacts = deps-only;
-          cargoExtraArgs = "--bin cli";
-          meta.mainProgram = "cli";
+          cargoExtraArgs = "--bin global-keybind-cli";
+          meta.mainProgram = "global-keybind-cli";
         }
         // common-build-args);
 
@@ -73,11 +73,11 @@
     inherit packages checks;
 
     apps = {
-      cli = {
+      global-keybind-cli = {
         type = "app";
-        program = pkgs.lib.getBin self'.packages.cli;
+        program = pkgs.lib.getBin self'.packages.global-keybind-cli;
       };
-      default = apps.cli;
+      default = apps.global-keybind-cli;
     };
 
     legacyPackages = {

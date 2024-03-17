@@ -10,6 +10,7 @@ authors = { workspace = true }
 [dependencies]
 anyhow = { workspace = true }
 clap = { version = "4.0.19", features = ["derive"] }
+evdev = { workspace = true }
 # serde = { workspace = true }
 # serde_json = { workspace = true }
 tokio = { workspace = true, features = ["full"] }

@@ -1,8 +1,6 @@
-use crate::{
-    commands::{Commands, HelloCommands},
-    error::Result,
-};
+use crate::{commands::Commands, error::Result};
 use clap::Parser;
+use evdev::{InputEventKind, Key};
 
 mod commands;
 mod error;
@@ -13,18 +11,19 @@ async fn main() -> Result<()> {
 
     let args = commands::Args::parse();
     match args.command {
-        Commands::Hello(hello) => {
-            let cmd = hello.command;
-            match cmd {
-                HelloCommands::World => {
-                    println!("Hello, world!");
-                }
-                HelloCommands::Name { name } => {
-                    println!("Hello, {}!", name);
+        Commands::Start => {
+            let mut device = evdev::Device::open("/dev/input/event5")?;
+            let keybind = Key::BTN_EXTRA;
+
+            loop {
+                for ev in device.fetch_events()? {
+                    if ev.event_type() == evdev::EventType::KEY
+                        && ev.kind() == InputEventKind::Key(keybind)
+                    {
+                        println!("Key event: {:?}", ev);
+                    }
                 }
             }
         }
     }
-
-    Ok(())
 }

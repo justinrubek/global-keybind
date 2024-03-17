@@ -12,12 +12,15 @@ async fn main() -> Result<()> {
 
     let args = commands::Args::parse();
     match args.command {
-        Commands::Start => {
-            let mut device = evdev::Device::open("/dev/input/event5")?;
+        Commands::Start {
+            device,
+            key_to_press,
+            key_to_send,
+        } => {
+            let mut device = evdev::Device::open(device)?;
             let xdo = XDo::new(None)?;
 
-            let key_to_press = Key::BTN_SIDE;
-            let key_to_send = "F12";
+            let key_to_press = Key::new(key_to_press);
 
             loop {
                 for ev in device.fetch_events()? {
@@ -26,10 +29,10 @@ async fn main() -> Result<()> {
                     {
                         match ev.value() {
                             0 => {
-                                xdo.send_keysequence_up(key_to_send, 0)?;
+                                xdo.send_keysequence_up(&key_to_send, 0)?;
                             }
                             1 => {
-                                xdo.send_keysequence_down(key_to_send, 0)?;
+                                xdo.send_keysequence_down(&key_to_send, 0)?;
                             }
                             _ => {}
                         }

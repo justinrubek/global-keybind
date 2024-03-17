@@ -19,6 +19,7 @@
       # formatting
       self'.packages.treefmt
       # misc
+      pkgs.evtest
     ];
   in {
     devShells = {
